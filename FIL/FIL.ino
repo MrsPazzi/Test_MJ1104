@@ -2,20 +2,19 @@
 #include <Math.h>
 
 UltraSonicDistanceSensor distanceSensor(13,  12);  // Initiate pin 13 as Trig, pin 12 as echo.
-int enA = 7;
-int in1 = 6;
-int in2 = 5;
+int enA = 0;
+int in1 = 2;
+int in2 = 3;
 
-int enB = 2;
+int enB = 1;
 int in3 = 4;
-int in4 = 3;
+int in4 = 5;
 
 int n = 0;
 
+int kompass[4] = {1,2,3,4};//Lista som används för navigering
+int R = kompass[0]; // R = 1
 
-float distance = distanceSensor.measureDistanceCm();
-
-int rdistance = (int)round(distance);
 
  
 int r[12] = {2,1,1,2,2,3,3,3,3,2,1,0};
@@ -33,86 +32,92 @@ void setup(){
   
 void loop() 
 {
-  int LIST[] = {1,2,3,4};//Lista som används för navigering
-  int R = LIST[0];
-  while(n >= 0)
-  rdistance = distanceSensor.measureDistanceCm();
-  Serial.println(rdistance);
-  {
-    if (rdistance%38 == 0 && distance != -1)
+  forward();
+  float distance = distanceSensor.measureDistanceCm();
+  Serial.println(distance);
+    if (distance > 38 && distance < 39)
     {
-      speedOff();
-      
       for (int i = 0 ; i < 4; i++)
       {
         for (int j = 0 ; j < 4; j++)
         {
-          if(i+1== r[n+1] && j == c[n+1])
+          if(i+1== r[n+1] && j == c[n+1]) //matris-indexet under
           {
             if(R == 2) // LEFT
             {
               //left turn
               turnA();
+              Serial.println("Vänster");
             }
             
             else if(R == 3) // RIGHT
             {
               //right turn
               turnB();
+              Serial.println("Höger");
             }
-            R = LIST[3]; //riktar söder
+            R = kompass[3]; //riktar söder
+            
              
           } 
           
-          else if(i-1 == r[n+1] && j ==c[n+1])
+          else if(i-1 == r[n+1] && j ==c[n+1]) //matris-indexet över
           {
             if(R == 3) // LEFT
             {
               //left turn
               turnA();
+              Serial.println("Vänster");
             }
             else if(R == 2) // RIGHT
             {
               //right turn
               turnB();
+              Serial.println("Höger");
             }
-            R = LIST[0]; //riktar norr
+            R = kompass[0]; //riktar norr
           }
           
-          else if(i == r[n+1] && j+1 == c[n+1])
+          else if(i == r[n+1] && j+1 == c[n+1]) //matris-indexet vänster
           {
             if (R ==  1) // RIGHT
             {
               //right turn
               turnB();
+              Serial.println("Höger");
             }
             else if(R == 4) // LEFT
             {
               //left turn
               turnA();
+              Serial.println("Vänster");
             }
-            R = LIST[2]; //riktar mot öst
+            R = kompass[2]; //riktar mot öst
           }
           
-          else if(i == r[n+1] && j-1 == c[n+1])
+          else if(i == r[n+1] && j-1 == c[n+1]) //matris-indexet höger
           {
             //väst
             if (R ==  1) //riktat nord
             {
               //turn left
               turnA();
+              Serial.println("Vänster");
             }
             else if(R == 4) //riktat syd
             {
               //turn right
               turnB();
+              Serial.println("Höger");
             }
-            R = LIST[1]; //riktar mot väst
+            R = kompass[1]; //riktar mot väst
           }
           forward(); //åker frammåt oavsett om den behövt svänga eller ej.
+          Serial.println("R = " + R);
         }
       }
       n = n+1;
+      Serial.println("n = " + n)
     }
-  }
+    
 }
