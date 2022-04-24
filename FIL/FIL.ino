@@ -35,89 +35,92 @@ void loop()
   forward();
   float distance = distanceSensor.measureDistanceCm();
   Serial.println(distance);
-    if (distance > 38 && distance < 39)
-    {
-      for (int i = 0 ; i < 4; i++)
-      {
-        for (int j = 0 ; j < 4; j++)
+    
+for (int i = 0 ; i < 4; i++){
+  
+  for (int j = 0 ; j < 4; j++){
+    
+    if (distance > 38 && distance < 39){
+      if(i+1== r[n+1] && j == c[n+1]) //matris-indexet under
         {
-          if(i+1== r[n+1] && j == c[n+1]) //matris-indexet under
+          if(R == 2) // LEFT
           {
-            if(R == 2) // LEFT
-            {
-              //left turn
-              turnA();
-              Serial.println("Vänster");
-            }
-            
-            else if(R == 3) // RIGHT
-            {
-              //right turn
-              turnB();
-              Serial.println("Höger");
-            }
-            R = kompass[3]; //riktar söder
-            
-             
-          } 
-          
-          else if(i-1 == r[n+1] && j ==c[n+1]) //matris-indexet över
-          {
-            if(R == 3) // LEFT
-            {
-              //left turn
-              turnA();
-              Serial.println("Vänster");
-            }
-            else if(R == 2) // RIGHT
-            {
-              //right turn
-              turnB();
-              Serial.println("Höger");
-            }
-            R = kompass[0]; //riktar norr
+            //left turn
+            turnA();
+            Serial.println("LEFT");
           }
           
-          else if(i == r[n+1] && j+1 == c[n+1]) //matris-indexet vänster
+          else if(R == 3) // RIGHT
           {
-            if (R ==  1) // RIGHT
-            {
-              //right turn
-              turnB();
-              Serial.println("Höger");
-            }
-            else if(R == 4) // LEFT
-            {
-              //left turn
-              turnA();
-              Serial.println("Vänster");
-            }
-            R = kompass[2]; //riktar mot öst
+            //right turn
+            turnB();
+            Serial.println("RIGHT");
           }
+          R = kompass[3]; //riktar söder
           
-          else if(i == r[n+1] && j-1 == c[n+1]) //matris-indexet höger
+           
+        } 
+        
+        else if(i-1 == r[n+1] && j ==c[n+1]) //matris-indexet över
+        {
+          if(R == 3) // LEFT
           {
-            //väst
-            if (R ==  1) //riktat nord
-            {
-              //turn left
-              turnA();
-              Serial.println("Vänster");
-            }
-            else if(R == 4) //riktat syd
-            {
-              //turn right
-              turnB();
-              Serial.println("Höger");
-            }
-            R = kompass[1]; //riktar mot väst
+            //left turn
+            turnA();
+            Serial.println("LEFT");
           }
-          forward(); //åker frammåt oavsett om den behövt svänga eller ej.
-          Serial.println("R = " + R);
+          else if(R == 2) // RIGHT
+          {
+            //right turn
+            turnB();
+            Serial.println("RIGHT");
+          }
+          R = kompass[0]; //riktar norr
         }
-      }
-      n = n+1;
-      Serial.println("n = " + n)
+        
+        else if(i == r[n+1] && j+1 == c[n+1]) //matris-indexet vänster
+        {
+          if (R ==  1) // RIGHT
+          {
+            //right turn
+            turnB();
+            Serial.println("RIGHT");
+          }
+          else if(R == 4) // LEFT
+          {
+            //left turn
+            turnA();
+            Serial.println("LEFT");
+          }
+          R = kompass[2]; //riktar mot öst
+        }
+        
+        else if(i == r[n+1] && j-1 == c[n+1]) //matris-indexet höger
+        {
+          //väst
+          if (R ==  1) //riktat nord
+          {
+            //turn left
+            turnA();
+            Serial.println("LEFT");
+          }
+          else if(R == 4) //riktat syd
+          {
+            //turn right
+            turnB();
+            Serial.println("LEFT");
+          }
+          R = kompass[1]; //riktar mot väst
+        }
+        forward(); //åker frammåt oavsett om den behövt svänga eller ej.
+        Serial.println("R = " + R);
+        n = n+1;
+        Serial.println("n = " + n);
+        Serial.println("Next step...");
+      
     }
+  }
+}
+  delay(10000);     
     
 }
