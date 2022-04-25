@@ -41,7 +41,7 @@ for (int i = 0 ; i < 4; i++){
   for (int j = 0 ; j < 4; j++){
     
     if (distance > 38 && distance < 39){
-      if(i+1== r[n+1] && j == c[n+1]) //matris-indexet under
+      if(i+1== r[n] && j == c[n]) //matris-indexet under
         {
           if(R == 2) // LEFT
           {
@@ -61,7 +61,7 @@ for (int i = 0 ; i < 4; i++){
            
         } 
         
-        else if(i-1 == r[n+1] && j ==c[n+1]) //matris-indexet över
+        else if(i-1 == r[n] && j ==c[n]) //matris-indexet över
         {
           if(R == 3) // LEFT
           {
@@ -78,7 +78,7 @@ for (int i = 0 ; i < 4; i++){
           R = kompass[0]; //riktar norr
         }
         
-        else if(i == r[n+1] && j+1 == c[n+1]) //matris-indexet vänster
+        else if(i == r[n] && j+1 == c[n]) //matris-indexet vänster
         {
           if (R ==  1) // RIGHT
           {
@@ -95,7 +95,7 @@ for (int i = 0 ; i < 4; i++){
           R = kompass[2]; //riktar mot öst
         }
         
-        else if(i == r[n+1] && j-1 == c[n+1]) //matris-indexet höger
+        else if(i == r[n] && j-1 == c[n]) //matris-indexet höger
         {
           //väst
           if (R ==  1) //riktat nord
